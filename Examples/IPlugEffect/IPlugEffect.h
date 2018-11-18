@@ -23,10 +23,10 @@ enum EParams
   kNumParams
 };
 
-class PLUG_CLASS_NAME : public IPlug
+class IPlugEffect : public IPlug
 {
 public:
-  PLUG_CLASS_NAME(IPlugInstanceInfo instanceInfo);
+  IPlugEffect(IPlugInstanceInfo instanceInfo);
   
 #if IPLUG_EDITOR // All UI methods and member variables should be within an IPLUG_EDITOR guard, should you want distributed UI
   IGraphics* CreateGraphics() override;

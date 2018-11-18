@@ -1,7 +1,8 @@
 #include "IPlugEffect.h"
 #include "IPlug_include_in_plug_src.h"
 
-PLUG_CLASS_NAME::PLUG_CLASS_NAME(IPlugInstanceInfo instanceInfo)
+
+IPlugEffect::IPlugEffect(IPlugInstanceInfo instanceInfo)
 : IPLUG_CTOR(kNumParams, kNumPrograms, instanceInfo)
 {
   TRACE;
@@ -15,7 +16,7 @@ PLUG_CLASS_NAME::PLUG_CLASS_NAME(IPlugInstanceInfo instanceInfo)
 }
 
 #if IPLUG_DSP
-void PLUG_CLASS_NAME::ProcessBlock(sample** inputs, sample** outputs, int nFrames)
+void IPlugEffect::ProcessBlock(sample** inputs, sample** outputs, int nFrames)
 {
   const double gain = GetParam(kGain)->Value() / 100.;
   
@@ -32,12 +33,12 @@ void PLUG_CLASS_NAME::ProcessBlock(sample** inputs, sample** outputs, int nFrame
   mScopeBallistics.ProcessBlock(outputs, nFrames);
 }
 
-void PLUG_CLASS_NAME::OnReset()
+void IPlugEffect::OnReset()
 {
   mDSP.Reset(GetSampleRate(), GetBlockSize());
 }
 
-void PLUG_CLASS_NAME::ProcessMidiMsg(const IMidiMsg& msg)
+void IPlugEffect::ProcessMidiMsg(const IMidiMsg& msg)
 {
   TRACE;
   
@@ -62,7 +63,7 @@ handle:
   SendMidiMsg(msg);
 }
 
-void PLUG_CLASS_NAME::OnIdle()
+void IPlugEffect::OnIdle()
 {
   mMeterBallistics.TransmitData(*this);
   mScopeBallistics.TransmitData(*this);
@@ -79,12 +80,12 @@ void PLUG_CLASS_NAME::OnIdle()
 #include "IVKeyboardControl.h"
 #include "IPlugEffect_controls.h"
 
-IGraphics* PLUG_CLASS_NAME::CreateGraphics()
+IGraphics* IPlugEffect::CreateGraphics()
 {
   return MakeGraphics(*this, PLUG_WIDTH, PLUG_HEIGHT, 60, 1.);
 }
 
-void PLUG_CLASS_NAME::LayoutUI(IGraphics* pGraphics)
+void IPlugEffect::LayoutUI(IGraphics* pGraphics)
 {
   if(pGraphics->NControls()) // TODO: we need to store the UI size/scale if IGraphics gets deleted
   {
@@ -96,9 +97,9 @@ void PLUG_CLASS_NAME::LayoutUI(IGraphics* pGraphics)
     return;
   }
 
-  pGraphics->AttachCornerResizer(kUIResizerSize);
+  pGraphics->AttachCornerResizer(kUIResizerScale);
   pGraphics->AttachPanelBackground(COLOR_GRAY);
-
+  
   const int nRows = 4;
   const int nColumns = 4;
   int cellIdx = 0;
@@ -113,7 +114,7 @@ void PLUG_CLASS_NAME::LayoutUI(IGraphics* pGraphics)
 #endif
   
   IColor color;
-  #if 1
+  #if 0
   pGraphics->AttachControl(new IVMeterControl<2>(*this, bounds.GetGridCell(cellIdx++, nRows, nColumns).GetPadded(-5.)), kControlTagMeter);
   pGraphics->AttachControl(new IVScopeControl<>(*this, bounds.GetGridCell(cellIdx++, nRows, nColumns).GetPadded(-5.)), kControlTagScope);
   
@@ -122,12 +123,12 @@ void PLUG_CLASS_NAME::LayoutUI(IGraphics* pGraphics)
   pGraphics->AttachControl(new IPolyControl(*this, bounds.GetGridCell(cellIdx++, nRows, nColumns).GetPadded(-5.), kGain));
   pGraphics->AttachControl(new IGradientControl(*this, bounds.GetGridCell(cellIdx++, nRows, nColumns).GetPadded(-5.), kGain));
   pGraphics->AttachControl(new IMultiPathControl(*this, bounds.GetGridCell(cellIdx++, nRows, nColumns).GetPadded(-5.), kGain));
-
-  #if 0
+  #endif
+#if 0
   pGraphics->AttachControl(new IVSVGKnob(*this, bounds.GetGridCell(cellIdx++, nRows, nColumns).GetPadded(-5.), svg1, kGain));
   pGraphics->AttachControl(new IVSVGKnob(*this, bounds.GetGridCell(cellIdx++, nRows, nColumns).GetPadded(-5.), svg2, kGain));
-  #endif
-  #endif
+#endif
+  
 
   #if 0
   for (auto i = 0; i < nRows * nColumns; i++) {

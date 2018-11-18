@@ -74,8 +74,8 @@
 #elif defined VST3C_API
   #include "IPlugVST3_Controller.h"
   typedef IPlugVST3Controller IPlug;
-  #undef PLUG_CLASS_NAME
-  #define PLUG_CLASS_NAME VST3Controller
+//  #undef PLUG_CLASS_NAME
+//  #define PLUG_CLASS_NAME VST3Controller
   #define API_EXT "vst3"
 #elif defined VST3P_API
   #include "IPlugVST3_Processor.h"
