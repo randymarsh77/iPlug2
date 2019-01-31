@@ -39,7 +39,7 @@ jobs:
       platformStr: 'WIN'
 
 - job: PUBLISH_WEBSITE_PAGES
-  condition: eq(variables.publishWebsite, true)
+  condition: eq(variables.publish_pages, true)
   dependsOn: 
     - BUILD_WEB_PROJECTS
 
