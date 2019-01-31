@@ -75,25 +75,34 @@ steps:
       cd $AGENT_TEMPDIRECTORY/APP/${{parameters.name}}
       zip -r $BUILD_ARTIFACTSTAGINGDIRECTORY/APP/${{parameters.name}}/${{parameters.name}}.zip ${{parameters.name}}.*
       
+      echo ${{parameters.justApp}}
       #if we are building a project with plug-ins
-      if [ -d ${{ parameters.path }}/${{parameters.name}}/build-mac/${{parameters.name}}.vst3 ] #todo: check something else ${{parameters.justApp}}
+      if [ ${{parameters.justApp}} = "false" ]
       then
-        mkdir -p $BUILD_ARTIFACTSTAGINGDIRECTORY/VST2/${{parameters.name}}
+        #VST3
+        mkdir -p $AGENT_TEMPDIRECTORY/VST3/${{parameters.name}}
         mkdir -p $BUILD_ARTIFACTSTAGINGDIRECTORY/VST3/${{parameters.name}}
+        mv ${{ parameters.path }}/${{parameters.name}}/build-mac/${{parameters.name}}.VST3* $AGENT_TEMPDIRECTORY/VST3/${{parameters.name}}
+        cd $AGENT_TEMPDIRECTORY/VST3/${{parameters.name}}
+        zip -r $BUILD_ARTIFACTSTAGINGDIRECTORY/VST3/${{parameters.name}}/${{parameters.name}}.zip ${{parameters.name}}.*
+        #VST2
+        mkdir -p $AGENT_TEMPDIRECTORY/VST2/${{parameters.name}}
+        mkdir -p $BUILD_ARTIFACTSTAGINGDIRECTORY/VST2/${{parameters.name}}
+        mv ${{ parameters.path }}/${{parameters.name}}/build-mac/${{parameters.name}}.VST2* $AGENT_TEMPDIRECTORY/VST2/${{parameters.name}}
+        cd $AGENT_TEMPDIRECTORY/VST2/${{parameters.name}}
+        zip -r $BUILD_ARTIFACTSTAGINGDIRECTORY/VST2/${{parameters.name}}/${{parameters.name}}.zip ${{parameters.name}}.*
+        #AAX
+        mkdir -p $AGENT_TEMPDIRECTORY/AAX/${{parameters.name}}
         mkdir -p $BUILD_ARTIFACTSTAGINGDIRECTORY/AAX/${{parameters.name}}
+        mv ${{ parameters.path }}/${{parameters.name}}/build-mac/${{parameters.name}}.AAX* $AGENT_TEMPDIRECTORY/AAX/${{parameters.name}}
+        cd $AGENT_TEMPDIRECTORY/AAX/${{parameters.name}}
+        zip -r $BUILD_ARTIFACTSTAGINGDIRECTORY/AAX/${{parameters.name}}/${{parameters.name}}.zip ${{parameters.name}}.*
+        #AUv2
+        mkdir -p $AGENT_TEMPDIRECTORY/AUv2/${{parameters.name}}
         mkdir -p $BUILD_ARTIFACTSTAGINGDIRECTORY/AUv2/${{parameters.name}}
-        mv ${{ parameters.path }}/${{parameters.name}}/build-mac/${{parameters.name}}.vst3* $BUILD_ARTIFACTSTAGINGDIRECTORY/VST3/${{parameters.name}} # must move VST3 first
-        mv ${{ parameters.path }}/${{parameters.name}}/build-mac/${{parameters.name}}.vst* $BUILD_ARTIFACTSTAGINGDIRECTORY/VST2/${{parameters.name}}
-        mv ${{ parameters.path }}/${{parameters.name}}/build-mac/${{parameters.name}}.aaxplugin* $BUILD_ARTIFACTSTAGINGDIRECTORY/AAX/${{parameters.name}}
-        mv ${{ parameters.path }}/${{parameters.name}}/build-mac/${{parameters.name}}.component* $BUILD_ARTIFACTSTAGINGDIRECTORY/AUv2/${{parameters.name}}
-        cd $BUILD_ARTIFACTSTAGINGDIRECTORY/VST3/${{parameters.name}}
-        zip -r ${{parameters.name}} ${{parameters.name}}.*
-        cd $BUILD_ARTIFACTSTAGINGDIRECTORY/VST2/${{parameters.name}}
-        zip -r ${{parameters.name}} ${{parameters.name}}.* 
-        cd $BUILD_ARTIFACTSTAGINGDIRECTORY/AAX/${{parameters.name}}
-        zip -r ${{parameters.name}} ${{parameters.name}}.* 
-        cd $BUILD_ARTIFACTSTAGINGDIRECTORY/AUv2/${{parameters.name}}
-        zip -r ${{parameters.name}} ${{parameters.name}}.*       
+        mv ${{ parameters.path }}/${{parameters.name}}/build-mac/${{parameters.name}}.AUv2* $AGENT_TEMPDIRECTORY/AUv2/${{parameters.name}}
+        cd $AGENT_TEMPDIRECTORY/AUv2/${{parameters.name}}
+        zip -r $BUILD_ARTIFACTSTAGINGDIRECTORY/AUv2/${{parameters.name}}/${{parameters.name}}.zip ${{parameters.name}}.*
       fi
     displayName: Organize artifacts
 
