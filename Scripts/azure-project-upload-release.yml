@@ -18,9 +18,14 @@
   - task: ExtractFiles@1
     inputs:
       archiveFilePatterns: '$(Build.BinariesDirectory)/*.zip'
-      destinationFolder: '$(Build.BinariesDirectory)'
+      destinationFolder: '$(Build.BinariesDirectory)/${{parameters.pluginType}}'
       cleanDestinationFolder: false
     displayName: Extract zip file if it exists
+
+  - task: DeleteFiles@1
+    inputs:
+      contents: '$(Build.BinariesDirectory)/*.zip'
+    displayName: Delete zip file if it exists
 
   - task: ArchiveFiles@2
     inputs:
