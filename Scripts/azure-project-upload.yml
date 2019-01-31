@@ -18,8 +18,8 @@ steps:
 
   - bash: |
       git pull # in case another client pushed allready
-      git config user.email ${{variables.publish_email}}
-      git config user.name ${{variables.publish_user}}
+      git config user.email $PUBLISH_EMAIL
+      git config user.name $PUBLISH_USER
       git add *
       git commit -m "publish via pipeline"
       git push origin master

@@ -9,16 +9,12 @@ jobs:
     matrix:
       NANOVG:
         graphics: 'NANOVG'
-        # condition: eq(variables.buildNANOVG, true)
       # CAIRO:
       #   graphics: 'CAIRO'
-      #   condition: eq(variables.buildCAIRO, true)
       # LICE:
       #   graphics: 'LICE'
-      #   condition: eq(variables.buildLICE, true)
       # AGG:
       #   graphics: 'AGG'
-      #   condition: eq(variables.buildAGG, true)
         
   pool:
     vmImage: 'ubuntu-16.04'
@@ -50,7 +46,7 @@ jobs:
   - checkout: none
 
   - bash: |
-      git clone https://olilarkin:$GITHUB_PAT@github.com/iPlug2/iPlug2.github.io.git $BUILD_SOURCESDIRECTORY
+      git clone https://$PUBLISH_USER:$GITHUB_PAT@github.com/iPlug2/iPlug2.github.io.git $BUILD_SOURCESDIRECTORY
     displayName: Clone website repo
     env:
       GITHUB_PAT: $(GITHUB_PAT)
