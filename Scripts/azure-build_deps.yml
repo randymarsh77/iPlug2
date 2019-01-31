@@ -1,6 +1,6 @@
 jobs:
 - job: BUILD_WIN_DEPS
-  dependsOn: DOWNLOAD_SRC_TREE
+  dependsOn: GET_SRC_TREE
   condition: and(eq(variables.build_deps, true), eq(variables.build_win, true))
 
   strategy:
@@ -86,7 +86,7 @@ jobs:
 - template: azure-build_aax_libs.yml
 
 - job: BUILD_MAC_DEPS
-  dependsOn: DOWNLOAD_SRC_TREE
+  dependsOn: GET_SRC_TREE
   condition: and(eq(variables.build_deps, true), eq(variables.build_mac, true))
 
   pool:

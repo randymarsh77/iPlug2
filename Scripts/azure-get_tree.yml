@@ -1,5 +1,5 @@
 jobs:
-- job: DOWNLOAD_SRC_TREE
+- job: GET_SRC_TREE
 
   steps:
   - checkout: self

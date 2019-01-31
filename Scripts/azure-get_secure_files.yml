@@ -20,10 +20,21 @@ steps:
 
   - task: ExtractFiles@1
     inputs:
-      archiveFilePatterns: '$(Agent.TempDirectory)/*.zip'
+      archiveFilePatterns: '$(Agent.TempDirectory)/VST2_SDK.zip'
       destinationFolder: '$(Agent.TempDirectory)'
       cleanDestinationFolder: false
-    condition: eq(variables.build_deps, false)
+
+  - task: ExtractFiles@1
+    inputs:
+      archiveFilePatterns: '$(Agent.TempDirectory)/AAX_SDK.zip'
+      destinationFolder: '$(Agent.TempDirectory)'
+      cleanDestinationFolder: false
+
+  - task: ExtractFiles@1
+    inputs:
+      archiveFilePatterns: '$(Agent.TempDirectory)/AGG.zip'
+      destinationFolder: '$(Agent.TempDirectory)'
+      cleanDestinationFolder: false
 
   - bash: |
       mv $AGENT_TEMPDIRECTORY/AAX_SDK/* ./Dependencies/IPlug/AAX_SDK
