@@ -27,7 +27,7 @@
   #   displayName: Archive ${{parameters.platformStr}}_${{parameters.pluginType}}_${{parameters.name}}_${{parameters.graphics}}
 
   - bash: |
-    zip -r $BUILD_BINARIESDIRECTORY ${{parameters.platformStr}}_${{parameters.pluginType}}_${{parameters.name}}_${{parameters.graphics}} $BUILD_BINARIESDIRECTORY/${{parameters.pluginType}}/*
+      zip -r $BUILD_BINARIESDIRECTORY ${{parameters.platformStr}}_${{parameters.pluginType}}_${{parameters.name}}_${{parameters.graphics}} $BUILD_BINARIESDIRECTORY/${{parameters.pluginType}}/*
     displayName: Archive ${{parameters.platformStr}}_${{parameters.pluginType}}_${{parameters.name}}_${{parameters.graphics}}
 
   - task: GithubRelease@0
