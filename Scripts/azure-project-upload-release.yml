@@ -28,7 +28,7 @@
 
   - task: GithubRelease@0
     inputs:
-      gitHubConnection: ${{variables.publish_user}}
+      gitHubConnection: '${{variables.publish_user}}'
       repositoryName: '${{variables.publish_site}}'
       action: 'edit' 
       target: 'master'

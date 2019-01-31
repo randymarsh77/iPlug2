@@ -1,10 +1,16 @@
 jobs:
 - job: PUBLISH_WEBSITE_DOWNLOADS
-  condition: eq(variables.publish_downloads, true)
-  dependsOn: 
+  dependsOn: |
     - BUILD_MAC_PROJECTS
     - BUILD_WIN_PROJECTS
-    
+  condition: |
+    and
+    (
+      in(dependencies.BUILD_MAC_PROJECTS.result, 'Succeeded'),
+      in(dependencies.BUILD_WIN_PROJECTS.result, 'Succeeded'),
+      eq(variables.publish_downloads, true)
+    )
+
   strategy:
     matrix:
       NANOVG:
@@ -15,7 +21,7 @@ jobs:
       #   graphics: 'LICE'
       # AGG:
       #   graphics: 'AGG'
-        
+
   pool:
     vmImage: 'ubuntu-16.04'
 
@@ -27,7 +33,7 @@ jobs:
       platform: azure-project-upload.yml
       graphics: $(graphics)
       platformStr: 'MAC'
-  
+
   - template: azure-projects.yml
     parameters:
       platform: azure-project-upload.yml
@@ -36,7 +42,7 @@ jobs:
 
 - job: PUBLISH_WEBSITE_PAGES
   condition: eq(variables.publish_pages, true)
-  dependsOn: 
+  dependsOn:
     - BUILD_WEB_PROJECTS
 
   pool:

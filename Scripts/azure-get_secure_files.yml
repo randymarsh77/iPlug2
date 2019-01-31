@@ -3,38 +3,41 @@ steps:
   - task: DownloadSecureFile@1
     inputs:
       secureFile: "VST2_SDK.zip"
-    displayName: Download VST2 SDK
     condition: or(variables.build_mac, variables.build_win)
+    displayName: Download VST2 SDK
 
   - task: DownloadSecureFile@1
     inputs:
       secureFile: "AAX_SDK.zip"
-    displayName: Download AAX SDK
     condition: or(variables.build_mac, variables.build_win)
+    displayName: Download AAX SDK
 
   - task: DownloadSecureFile@1
     inputs:
       secureFile: "AGG.zip"
-    displayName: Download AGG
     condition: or(variables.build_mac, variables.build_win)
+    displayName: Download AGG
 
   - task: ExtractFiles@1
     inputs:
       archiveFilePatterns: '$(Agent.TempDirectory)/VST2_SDK.zip'
       destinationFolder: '$(Agent.TempDirectory)'
       cleanDestinationFolder: false
+    displayName: Extract VST2 SDK
 
   - task: ExtractFiles@1
     inputs:
       archiveFilePatterns: '$(Agent.TempDirectory)/AAX_SDK.zip'
       destinationFolder: '$(Agent.TempDirectory)'
       cleanDestinationFolder: false
+    displayName: Extract AAX SDK
 
   - task: ExtractFiles@1
     inputs:
       archiveFilePatterns: '$(Agent.TempDirectory)/AGG.zip'
       destinationFolder: '$(Agent.TempDirectory)'
       cleanDestinationFolder: false
+    displayName: Extract AGG
 
   - bash: |
       mv $AGENT_TEMPDIRECTORY/AAX_SDK/* ./Dependencies/IPlug/AAX_SDK
