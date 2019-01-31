@@ -1,0 +1,104 @@
+jobs:
+- job: BUILD_MAC_PROJECTS
+  condition: and(eq(variables.buildDEPS, false), eq(variables.buildMac, true))
+  dependsOn: DOWNLOAD_DEPS
+
+  strategy:
+    matrix:
+      NANOVG:
+        graphics: 'NANOVG'
+        # condition: eq(variables.buildNANOVG, true)
+      # CAIRO:
+      #   graphics: 'CAIRO'
+      #   condition: eq(variables.buildCAIRO, true)
+      # LICE:
+      #   graphics: 'LICE'
+      #   condition: eq(variables.buildLICE, true)
+      # AGG:
+      #   graphics: 'AGG'
+      #   condition: eq(variables.buildAGG, true)
+
+  pool:
+    vmImage: 'macos-10.13'
+
+  steps:
+  - checkout: none
+
+  - template: Scripts/azure-get_src.yml
+
+  - template: azure-projects.yml
+    parameters:
+      platform: Scripts/azure-project-mac.yml
+      graphics: $(graphics)
+
+- job: BUILD_WIN_PROJECTS
+  condition: and(eq(variables.buildDEPS, false), eq(variables.buildWin, true))
+  dependsOn: 
+    - DOWNLOAD_DEPS
+    - BUILD_WIN_AAX_LIBS
+
+  strategy:
+    matrix:
+      NANOVG:
+        graphics: 'NANOVG'
+        # condition: eq(variables.buildNANOVG, true)
+      # CAIRO:
+      #   graphics: 'CAIRO'
+      #   condition: eq(variables.buildCAIRO, true)
+      # LICE:
+      #   graphics: 'LICE'
+      #   condition: eq(variables.buildLICE, true)
+      # AGG:
+      #   graphics: 'AGG'
+      #   condition: eq(variables.buildAGG, true)
+
+  pool:
+    vmImage: 'vs2017-win2016'
+
+  steps:
+  - checkout: none
+
+  - template: Scripts/azure-get_src.yml
+
+  - task: DownloadPipelineArtifact@0
+    inputs:
+      artifactName: 'DEPS_AAX_LIB_WIN'
+      targetPath: 'Dependencies/IPlug/AAX_SDK/Libs/'
+
+  - template: azure-projects.yml
+    parameters:
+      platform: Scripts/azure-project-win.yml
+      graphics: $(graphics)
+
+- job: BUILD_WEB_PROJECTS
+  condition: and(eq(variables.buildDEPS, false), eq(variables.buildWeb, true))
+  dependsOn: DOWNLOAD_DEPS
+
+  strategy:
+    matrix:
+      NANOVG:
+        graphics: 'NANOVG'
+        # condition: eq(variables.buildNANOVG, true)
+      CANVAS:
+        graphics: 'CANVAS'
+        # condition: eq(variables.buildCANVAS, true)
+
+  pool:
+    vmImage: 'ubuntu-16.04'
+
+  steps:
+  - checkout: none
+
+  - bash: |
+      git clone https://github.com/emscripten-core/emsdk.git
+      cd emsdk
+      ./emsdk install latest
+      ./emsdk activate latest
+    displayName: Install emscripten
+
+  - template: Scripts/azure-get_src.yml
+
+  - template: azure-projects.yml
+    parameters:
+      platform: Scripts/azure-project-web.yml
+      graphics: $(graphics)
