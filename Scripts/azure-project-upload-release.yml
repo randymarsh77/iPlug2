@@ -15,9 +15,9 @@
       targetPath: '$(Build.BinariesDirectory)/${{parameters.pluginType}}'
     displayName: Download ${{parameters.platformStr}}_${{parameters.pluginType}}_${{parameters.name}}_${{parameters.graphics}}
 
-  - bash: |
-      ls -lR $BUILD_BINARIESDIRECTORY/${{parameters.pluginType}}/
-    displayName: Print permissions
+  # - bash: |
+  #     ls -lR $BUILD_BINARIESDIRECTORY/${{parameters.pluginType}}/
+  #   displayName: Print permissions
 
   #todo: This resets all permissions rendering macOS app bundles non-executable
   # - task: ArchiveFiles@2
@@ -27,7 +27,7 @@
   #   displayName: Archive ${{parameters.platformStr}}_${{parameters.pluginType}}_${{parameters.name}}_${{parameters.graphics}}
 
   - bash: |
-      zip -r $BUILD_BINARIESDIRECTORY ${{parameters.platformStr}}_${{parameters.pluginType}}_${{parameters.name}}_${{parameters.graphics}} $BUILD_BINARIESDIRECTORY/${{parameters.pluginType}}/*
+      zip -r $BUILD_ARTIFACTSTAGINGDIRECTORY/${{parameters.platformStr}}_${{parameters.pluginType}}_${{parameters.name}}_${{parameters.graphics}}.zip $BUILD_BINARIESDIRECTORY/${{parameters.pluginType}}/*
     displayName: Archive ${{parameters.platformStr}}_${{parameters.pluginType}}_${{parameters.name}}_${{parameters.graphics}}
 
   - task: GithubRelease@0
