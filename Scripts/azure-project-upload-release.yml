@@ -12,7 +12,7 @@
   - task: DownloadPipelineArtifact@0
     inputs:
       artifactName: '${{parameters.platformStr}}_${{parameters.pluginType}}_${{parameters.name}}_${{parameters.graphics}}'
-      targetPath: '$(Build.BinariesDirectory)/${{parameters.pluginType}}'
+      targetPath: '$(Build.BinariesDirectory)'
     displayName: Download ${{parameters.platformStr}}_${{parameters.pluginType}}_${{parameters.name}}_${{parameters.graphics}}
 
   - task: ExtractFiles@1
