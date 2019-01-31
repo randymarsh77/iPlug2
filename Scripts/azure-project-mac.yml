@@ -68,12 +68,12 @@ steps:
 
   #   displayName: TEST PAYLOAD
 
-    - template: azure-project-mac-artifact.yml
-      parameters:
-        name: '${{parameters.name}}'
-        path: '${{parameters.path}}'
-        artifactName: '${{parameters.artifactName}}'
-        formatStr: 'APP'
+  - template: azure-project-mac-artifact.yml
+    parameters:
+      name: '${{parameters.name}}'
+      path: '${{parameters.path}}'
+      artifactName: '${{parameters.artifactName}}'
+      formatStr: 'APP'
 
   # - bash: |
   #     outputDir=$BUILD_ARTIFACTSTAGINGDIRECTORY/APP/${{parameters.name}}
