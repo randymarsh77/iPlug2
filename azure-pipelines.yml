@@ -2,10 +2,11 @@ variables:
   buildDEPS: false
   downloadDEPS: true
   buildWeb: true
-  buildMac: true
-  buildWin: true
+  buildMac: false
+  buildWin: false
   publishDownloads: false
   publishPages: false
+  publishDocs: false  
   # buildNANOVG: true;
   # buildLICE: false;
   # buildCAIRO: false;
@@ -42,3 +43,7 @@ jobs:
 # if publishDownloads == true, publises the binaries for the examples hosted on the releases page of the iPlug2 website github
 # https://github.com/iPlug2/iPlug2.github.io/releases
 - template: Scripts/azure-publish_site.yml
+
+# azure-publish_docs.yml
+# if publishDocs == true, generates doxygen html from the iPlug2/Documentation/doxyfile and publishes it to https://iplug2.github.io/docs
+- template: Scripts/azure-publish_docs.yml
