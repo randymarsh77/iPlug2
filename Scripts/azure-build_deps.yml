@@ -1,7 +1,7 @@
 jobs:
 - job: BUILD_WIN_DEPS
   dependsOn: DOWNLOAD_DEPS
-  condition: eq(variables.buildWin, true)
+  condition: and(eq(variables.buildDEPS, true), eq(variables.buildWin, true))
 
   strategy:
     matrix:

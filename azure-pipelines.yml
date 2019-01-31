@@ -31,7 +31,6 @@ jobs:
 # Creates two artifacts IPLUG2_DEPS_MAC and IPLUG2_DEPS_WIN which are published on the releases page of the iPlug2 github 
 # https://github.com/iPlug2/iPlug2/releases
 - template: Scripts/azure-build_deps.yml
-  condition: eq(variables.buildDEPS, true)
 
 # azure-build_projects.yml
 # Builds each of the projects listed in azure-projects.yml, for multiple platforms
