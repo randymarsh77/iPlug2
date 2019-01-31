@@ -69,10 +69,11 @@ steps:
   #   displayName: TEST PAYLOAD
 
   - bash: |
+      mkdir -p $AGENT_TEMPDIRECTORY/APP/${{parameters.name}}
       mkdir -p $BUILD_ARTIFACTSTAGINGDIRECTORY/APP/${{parameters.name}}
-      mv ${{ parameters.path }}/${{parameters.name}}/build-mac/${{parameters.name}}.app* $BUILD_ARTIFACTSTAGINGDIRECTORY/APP/${{parameters.name}}
-      cd $BUILD_ARTIFACTSTAGINGDIRECTORY/APP/${{parameters.name}}
-      zip -r ${{parameters.name}}.zip ${{parameters.name}}.*
+      mv ${{ parameters.path }}/${{parameters.name}}/build-mac/${{parameters.name}}.app* $AGENT_TEMPDIRECTORY/APP/${{parameters.name}}
+      cd $AGENT_TEMPDIRECTORY/APP/${{parameters.name}}
+      zip -r $BUILD_ARTIFACTSTAGINGDIRECTORY/APP/${{parameters.name}}/${{parameters.name}}.zip ${{parameters.name}}.*
       
       #if we are building a project with plug-ins
       if [ -d ${{ parameters.path }}/${{parameters.name}}/build-mac/${{parameters.name}}.vst3 ] #todo: check something else ${{parameters.justApp}}
@@ -99,33 +100,33 @@ steps:
   - task: PublishPipelineArtifact@0
     inputs:
       artifactName: 'MAC_VST2_${{ parameters.artifactName }}'
-      targetPath: '$(Build.ArtifactStagingDirectory)/VST2/${{parameters.name}}/${{parameters.name}}.zip'
+      targetPath: '$(Build.ArtifactStagingDirectory)/VST2/${{parameters.name}}'
     displayName: Publish ${{parameters.name}} VST2
     condition: eq(${{parameters.justApp}}, false)
 
   - task: PublishPipelineArtifact@0
     inputs:
       artifactName: 'MAC_VST3_${{ parameters.artifactName }}'
-      targetPath: '$(Build.ArtifactStagingDirectory)/VST3/${{parameters.name}}/${{parameters.name}}.zip'
+      targetPath: '$(Build.ArtifactStagingDirectory)/VST3/${{parameters.name}}'
     displayName: Publish ${{parameters.name}} VST3
     condition: eq(${{parameters.justApp}}, false)
 
   - task: PublishPipelineArtifact@0
     inputs:
       artifactName: 'MAC_AAX_${{ parameters.artifactName }}'
-      targetPath: '$(Build.ArtifactStagingDirectory)/AAX/${{parameters.name}}/${{parameters.name}}.zip'
+      targetPath: '$(Build.ArtifactStagingDirectory)/AAX/${{parameters.name}}'
     displayName: Publish ${{parameters.name}} AAX
     condition: eq(${{parameters.justApp}}, false)
 
   - task: PublishPipelineArtifact@0
     inputs:
       artifactName: 'MAC_AUv2_${{ parameters.artifactName }}'
-      targetPath: '$(Build.ArtifactStagingDirectory)/AUv2/${{parameters.name}}/${{parameters.name}}.zip'
+      targetPath: '$(Build.ArtifactStagingDirectory)/AUv2/${{parameters.name}}'
     displayName: Publish ${{parameters.name}} AUv2
     condition: eq(${{parameters.justApp}}, false)
 
   - task: PublishPipelineArtifact@0
     inputs:
       artifactName: 'MAC_APP_${{ parameters.artifactName }}'
-      targetPath: '$(Build.ArtifactStagingDirectory)/APP/${{parameters.name}}/${{parameters.name}}.zip'
+      targetPath: '$(Build.ArtifactStagingDirectory)/APP/${{parameters.name}}'
     displayName: Publish ${{parameters.name}} APP
