@@ -24,11 +24,11 @@ jobs:
   steps:
   - checkout: none
 
-  - template: Scripts/azure-get_src.yml
+  - template: azure-get_src.yml
 
   - template: azure-projects.yml
     parameters:
-      platform: Scripts/azure-project-mac.yml
+      platform: azure-project-mac.yml
       graphics: $(graphics)
 
 - job: BUILD_WIN_PROJECTS
@@ -58,7 +58,7 @@ jobs:
   steps:
   - checkout: none
 
-  - template: Scripts/azure-get_src.yml
+  - template: azure-get_src.yml
 
   - task: DownloadPipelineArtifact@0
     inputs:
@@ -67,7 +67,7 @@ jobs:
 
   - template: azure-projects.yml
     parameters:
-      platform: Scripts/azure-project-win.yml
+      platform: azure-project-win.yml
       graphics: $(graphics)
 
 - job: BUILD_WEB_PROJECTS
@@ -96,9 +96,9 @@ jobs:
       ./emsdk activate latest
     displayName: Install emscripten
 
-  - template: Scripts/azure-get_src.yml
+  - template: azure-get_src.yml
 
   - template: azure-projects.yml
     parameters:
-      platform: Scripts/azure-project-web.yml
+      platform: azure-project-web.yml
       graphics: $(graphics)

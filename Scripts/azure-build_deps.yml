@@ -24,7 +24,7 @@ jobs:
   steps:
   - checkout: none
 
-  - template: Scripts/azure-get_src.yml
+  - template: azure-get_src.yml
 
   - task: VSBuild@1
     inputs:
@@ -83,7 +83,7 @@ jobs:
       targetPath: 'Dependencies/Build/'
     displayName: Publish Windows Dependencies Artifacts
 
-- template: Scripts/azure-build_aax_libs.yml
+- template: azure-build_aax_libs.yml
 
 - job: BUILD_MAC_DEPS
   dependsOn: DOWNLOAD_DEPS
@@ -94,7 +94,7 @@ jobs:
   steps:
   - checkout: none
 
-  - template: Scripts/azure-get_src.yml
+  - template: azure-get_src.yml
 
   - bash: |
       #tmp force cairo rebuild

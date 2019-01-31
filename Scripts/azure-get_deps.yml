@@ -18,7 +18,7 @@ jobs:
     displayName: Download IGraphics Dependencies BUILT
     condition: eq(variables.buildDEPS, false)
 
-  - template: Scripts/azure-get_secure_files.yml
+  - template: azure-get_secure_files.yml
 
   - bash: |
       mkdir ./Dependencies/Build

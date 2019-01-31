@@ -28,13 +28,13 @@ jobs:
 
   - template: azure-projects.yml
     parameters:
-      platform: Scripts/azure-project-upload.yml
+      platform: azure-project-upload.yml
       graphics: $(graphics)
       platformStr: 'MAC'
   
   - template: azure-projects.yml
     parameters:
-      platform: Scripts/azure-project-upload.yml
+      platform: azure-project-upload.yml
       graphics: $(graphics)
       platformStr: 'WIN'
 
@@ -57,12 +57,12 @@ jobs:
 
   - template: azure-projects.yml
     parameters:
-      platform: Scripts/azure-project-upload.yml
+      platform: azure-project-upload.yml
       graphics: 'NANOVG'
       platformStr: 'WEB'
 
   - template: azure-projects.yml
     parameters:
-      platform: Scripts/azure-project-upload.yml
+      platform: azure-project-upload.yml
       graphics: 'CANVAS'
       platformStr: 'WEB'
