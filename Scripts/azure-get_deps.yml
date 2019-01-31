@@ -18,6 +18,13 @@ jobs:
     displayName: Download IGraphics Dependencies BUILT
     condition: eq(variables.buildDEPS, false)
 
+  - task: ExtractFiles@1
+    inputs:
+      archiveFilePatterns: '$(Agent.TempDirectory)/*.zip'
+      destinationFolder: '$(Agent.TempDirectory)'
+      cleanDestinationFolder: false
+    condition: eq(variables.buildDEPS, false)
+
   - template: azure-get_secure_files.yml
 
   - bash: |
