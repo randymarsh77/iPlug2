@@ -68,44 +68,51 @@ steps:
 
   #   displayName: TEST PAYLOAD
 
-  - bash: |
-      outputDir=$BUILD_ARTIFACTSTAGINGDIRECTORY/APP/${{parameters.name}}
-      mkdir -p $outputDir
-      cd ${{parameters.path}}/${{parameters.name}}/build-mac/
-      zip -r ${{parameters.name}}.zip ${{parameters.name}}.*
-      mv ${{parameters.name}}.zip $outputDir
-    displayName: Organize artifacts
+    - template: azure-project-mac-artifact.yml
+      parameters:
+        name: '${{parameters.name}}'
+        path: '${{parameters.path}}'
+        artifactName: '${{parameters.artifactName}}'
+        formatStr: 'APP'
 
-  - task: PublishPipelineArtifact@0
-    inputs:
-      artifactName: 'MAC_VST2_${{ parameters.artifactName }}'
-      targetPath: '$(Build.ArtifactStagingDirectory)/VST2/${{parameters.name}}'
-    displayName: Publish ${{parameters.name}} VST2
-    condition: eq(${{parameters.justApp}}, false)
+  # - bash: |
+  #     outputDir=$BUILD_ARTIFACTSTAGINGDIRECTORY/APP/${{parameters.name}}
+  #     mkdir -p $outputDir
+  #     cd ${{parameters.path}}/${{parameters.name}}/build-mac/
+  #     zip -r ${{parameters.name}}.zip ${{parameters.name}}.*
+  #     mv ${{parameters.name}}.zip $outputDir
+  #   displayName: Organize artifacts
 
-  - task: PublishPipelineArtifact@0
-    inputs:
-      artifactName: 'MAC_VST3_${{ parameters.artifactName }}'
-      targetPath: '$(Build.ArtifactStagingDirectory)/VST3/${{parameters.name}}'
-    displayName: Publish ${{parameters.name}} VST3
-    condition: eq(${{parameters.justApp}}, false)
+  # - task: PublishPipelineArtifact@0
+  #   inputs:
+  #     artifactName: 'MAC_VST2_${{ parameters.artifactName }}'
+  #     targetPath: '$(Build.ArtifactStagingDirectory)/VST2/${{parameters.name}}'
+  #   displayName: Publish ${{parameters.name}} VST2
+  #   condition: eq(${{parameters.justApp}}, false)
 
-  - task: PublishPipelineArtifact@0
-    inputs:
-      artifactName: 'MAC_AAX_${{ parameters.artifactName }}'
-      targetPath: '$(Build.ArtifactStagingDirectory)/AAX/${{parameters.name}}'
-    displayName: Publish ${{parameters.name}} AAX
-    condition: eq(${{parameters.justApp}}, false)
+  # - task: PublishPipelineArtifact@0
+  #   inputs:
+  #     artifactName: 'MAC_VST3_${{ parameters.artifactName }}'
+  #     targetPath: '$(Build.ArtifactStagingDirectory)/VST3/${{parameters.name}}'
+  #   displayName: Publish ${{parameters.name}} VST3
+  #   condition: eq(${{parameters.justApp}}, false)
 
-  - task: PublishPipelineArtifact@0
-    inputs:
-      artifactName: 'MAC_AUv2_${{ parameters.artifactName }}'
-      targetPath: '$(Build.ArtifactStagingDirectory)/AUv2/${{parameters.name}}'
-    displayName: Publish ${{parameters.name}} AUv2
-    condition: eq(${{parameters.justApp}}, false)
+  # - task: PublishPipelineArtifact@0
+  #   inputs:
+  #     artifactName: 'MAC_AAX_${{ parameters.artifactName }}'
+  #     targetPath: '$(Build.ArtifactStagingDirectory)/AAX/${{parameters.name}}'
+  #   displayName: Publish ${{parameters.name}} AAX
+  #   condition: eq(${{parameters.justApp}}, false)
 
-  - task: PublishPipelineArtifact@0
-    inputs:
-      artifactName: 'MAC_APP_${{ parameters.artifactName }}'
-      targetPath: '$(Build.ArtifactStagingDirectory)/APP/${{parameters.name}}'
-    displayName: Publish ${{parameters.name}} APP
+  # - task: PublishPipelineArtifact@0
+  #   inputs:
+  #     artifactName: 'MAC_AUv2_${{ parameters.artifactName }}'
+  #     targetPath: '$(Build.ArtifactStagingDirectory)/AUv2/${{parameters.name}}'
+  #   displayName: Publish ${{parameters.name}} AUv2
+  #   condition: eq(${{parameters.justApp}}, false)
+
+  # - task: PublishPipelineArtifact@0
+  #   inputs:
+  #     artifactName: 'MAC_APP_${{ parameters.artifactName }}'
+  #     targetPath: '$(Build.ArtifactStagingDirectory)/APP/${{parameters.name}}'
+  #   displayName: Publish ${{parameters.name}} APP

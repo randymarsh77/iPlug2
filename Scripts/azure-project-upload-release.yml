@@ -23,8 +23,11 @@
     displayName: Extract zip file if it exists
 
   - bash: |
-      rm -r $BUILD_BINARIESDIRECTORY/*.zip
-    displayName: Clean temporary directory
+      if [ -f $BUILD_BINARIESDIRECTORY/*.zip ]
+      then
+        rm $BUILD_BINARIESDIRECTORY/*.zip
+      fi
+    displayName: Delete zip file if it exists
 
   - task: ArchiveFiles@2
     inputs:
