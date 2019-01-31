@@ -22,15 +22,15 @@
       cleanDestinationFolder: false
     displayName: Extract zip file if it exists
 
-  - task: DeleteFiles@1
-    inputs:
-      contents: '$(Build.BinariesDirectory)/*.zip'
-    displayName: Delete zip file if it exists
+  - bash: |
+      rm -r $BUILD_BINARIESDIRECTORY/*.zip
+    displayName: Clean temporary directory
 
   - task: ArchiveFiles@2
     inputs:
       rootFolderOrFile: '$(Build.BinariesDirectory)'
-      archiveFile: '$(Build.ArtifactStagingDirectory)/${{parameters.platformStr}}_${{parameters.pluginType}}_${{parameters.name}}_${{parameters.graphics}}.zip' 
+      archiveFile: '$(Build.ArtifactStagingDirectory)/${{parameters.platformStr}}_${{parameters.pluginType}}_${{parameters.name}}_${{parameters.graphics}}.zip'
+      includeRootFolder: false
     displayName: Archive ${{parameters.platformStr}}_${{parameters.pluginType}}_${{parameters.name}}_${{parameters.graphics}}
 
   - task: GithubRelease@0
