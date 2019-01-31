@@ -77,33 +77,33 @@ steps:
       
       echo ${{parameters.justApp}}
       #if we are building a project with plug-ins
-      if [ ${{parameters.justApp}} = "false" ]
-      then
-        #VST3
-        mkdir -p $AGENT_TEMPDIRECTORY/VST3/${{parameters.name}}
-        mkdir -p $BUILD_ARTIFACTSTAGINGDIRECTORY/VST3/${{parameters.name}}
-        mv ${{ parameters.path }}/${{parameters.name}}/build-mac/${{parameters.name}}.VST3* $AGENT_TEMPDIRECTORY/VST3/${{parameters.name}}
-        cd $AGENT_TEMPDIRECTORY/VST3/${{parameters.name}}
-        zip -r $BUILD_ARTIFACTSTAGINGDIRECTORY/VST3/${{parameters.name}}/${{parameters.name}}.zip ${{parameters.name}}.*
-        #VST2
-        mkdir -p $AGENT_TEMPDIRECTORY/VST2/${{parameters.name}}
-        mkdir -p $BUILD_ARTIFACTSTAGINGDIRECTORY/VST2/${{parameters.name}}
-        mv ${{ parameters.path }}/${{parameters.name}}/build-mac/${{parameters.name}}.VST2* $AGENT_TEMPDIRECTORY/VST2/${{parameters.name}}
-        cd $AGENT_TEMPDIRECTORY/VST2/${{parameters.name}}
-        zip -r $BUILD_ARTIFACTSTAGINGDIRECTORY/VST2/${{parameters.name}}/${{parameters.name}}.zip ${{parameters.name}}.*
-        #AAX
-        mkdir -p $AGENT_TEMPDIRECTORY/AAX/${{parameters.name}}
-        mkdir -p $BUILD_ARTIFACTSTAGINGDIRECTORY/AAX/${{parameters.name}}
-        mv ${{ parameters.path }}/${{parameters.name}}/build-mac/${{parameters.name}}.AAX* $AGENT_TEMPDIRECTORY/AAX/${{parameters.name}}
-        cd $AGENT_TEMPDIRECTORY/AAX/${{parameters.name}}
-        zip -r $BUILD_ARTIFACTSTAGINGDIRECTORY/AAX/${{parameters.name}}/${{parameters.name}}.zip ${{parameters.name}}.*
-        #AUv2
-        mkdir -p $AGENT_TEMPDIRECTORY/AUv2/${{parameters.name}}
-        mkdir -p $BUILD_ARTIFACTSTAGINGDIRECTORY/AUv2/${{parameters.name}}
-        mv ${{ parameters.path }}/${{parameters.name}}/build-mac/${{parameters.name}}.AUv2* $AGENT_TEMPDIRECTORY/AUv2/${{parameters.name}}
-        cd $AGENT_TEMPDIRECTORY/AUv2/${{parameters.name}}
-        zip -r $BUILD_ARTIFACTSTAGINGDIRECTORY/AUv2/${{parameters.name}}/${{parameters.name}}.zip ${{parameters.name}}.*
-      fi
+      # if [ ${{parameters.justApp}} = "false" ]
+      # then
+      #   #VST3
+      #   mkdir -p $AGENT_TEMPDIRECTORY/VST3/${{parameters.name}}
+      #   mkdir -p $BUILD_ARTIFACTSTAGINGDIRECTORY/VST3/${{parameters.name}}
+      #   mv ${{ parameters.path }}/${{parameters.name}}/build-mac/${{parameters.name}}.VST3* $AGENT_TEMPDIRECTORY/VST3/${{parameters.name}}
+      #   cd $AGENT_TEMPDIRECTORY/VST3/${{parameters.name}}
+      #   zip -r $BUILD_ARTIFACTSTAGINGDIRECTORY/VST3/${{parameters.name}}/${{parameters.name}}.zip ${{parameters.name}}.*
+      #   #VST2
+      #   mkdir -p $AGENT_TEMPDIRECTORY/VST2/${{parameters.name}}
+      #   mkdir -p $BUILD_ARTIFACTSTAGINGDIRECTORY/VST2/${{parameters.name}}
+      #   mv ${{ parameters.path }}/${{parameters.name}}/build-mac/${{parameters.name}}.VST2* $AGENT_TEMPDIRECTORY/VST2/${{parameters.name}}
+      #   cd $AGENT_TEMPDIRECTORY/VST2/${{parameters.name}}
+      #   zip -r $BUILD_ARTIFACTSTAGINGDIRECTORY/VST2/${{parameters.name}}/${{parameters.name}}.zip ${{parameters.name}}.*
+      #   #AAX
+      #   mkdir -p $AGENT_TEMPDIRECTORY/AAX/${{parameters.name}}
+      #   mkdir -p $BUILD_ARTIFACTSTAGINGDIRECTORY/AAX/${{parameters.name}}
+      #   mv ${{ parameters.path }}/${{parameters.name}}/build-mac/${{parameters.name}}.AAX* $AGENT_TEMPDIRECTORY/AAX/${{parameters.name}}
+      #   cd $AGENT_TEMPDIRECTORY/AAX/${{parameters.name}}
+      #   zip -r $BUILD_ARTIFACTSTAGINGDIRECTORY/AAX/${{parameters.name}}/${{parameters.name}}.zip ${{parameters.name}}.*
+      #   #AUv2
+      #   mkdir -p $AGENT_TEMPDIRECTORY/AUv2/${{parameters.name}}
+      #   mkdir -p $BUILD_ARTIFACTSTAGINGDIRECTORY/AUv2/${{parameters.name}}
+      #   mv ${{ parameters.path }}/${{parameters.name}}/build-mac/${{parameters.name}}.AUv2* $AGENT_TEMPDIRECTORY/AUv2/${{parameters.name}}
+      #   cd $AGENT_TEMPDIRECTORY/AUv2/${{parameters.name}}
+      #   zip -r $BUILD_ARTIFACTSTAGINGDIRECTORY/AUv2/${{parameters.name}}/${{parameters.name}}.zip ${{parameters.name}}.*
+      # fi
     displayName: Organize artifacts
 
   - task: PublishPipelineArtifact@0
