@@ -15,6 +15,13 @@
       targetPath: '$(Build.BinariesDirectory)/${{parameters.pluginType}}'
     displayName: Download ${{parameters.platformStr}}_${{parameters.pluginType}}_${{parameters.name}}_${{parameters.graphics}}
 
+  - task: ExtractFiles@1
+    inputs:
+      archiveFilePatterns: '$(Build.BinariesDirectory)/*.zip'
+      destinationFolder: '$(Build.BinariesDirectory)'
+      cleanDestinationFolder: false
+    displayName: Extract zip file if it exists
+
   - task: ArchiveFiles@2
     inputs:
       rootFolderOrFile: '$(Build.BinariesDirectory)/${{parameters.pluginType}}'
