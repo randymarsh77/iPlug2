@@ -1,0 +1,35 @@
+#Download and unzip secure files for VST2_SDK, AAX_SDK and AGG
+steps:
+  - task: DownloadSecureFile@1
+    inputs:
+      secureFile: "VST2_SDK.zip"
+    displayName: Download VST2 SDK
+    condition: or(variables.buildMac, variables.buildWin)
+
+  - task: DownloadSecureFile@1
+    inputs:
+      secureFile: "AAX_SDK.zip"
+    displayName: Download AAX SDK
+    condition: or(variables.buildMac, variables.buildWin)
+
+  - task: DownloadSecureFile@1
+    inputs:
+      secureFile: "AGG.zip"
+    displayName: Download AGG
+    condition: or(variables.buildMac, variables.buildWin)
+
+  - task: ExtractFiles@1
+    inputs:
+      archiveFilePatterns: '$(Agent.TempDirectory)/*.zip'
+      destinationFolder: '$(Agent.TempDirectory)'
+      cleanDestinationFolder: false
+    condition: eq(variables.buildDEPS, false)
+
+  - bash: |
+      mv $AGENT_TEMPDIRECTORY/AAX_SDK/* ./Dependencies/IPlug/AAX_SDK
+      mv $AGENT_TEMPDIRECTORY/VST2_SDK/* ./Dependencies/IPlug/VST2_SDK
+      mkdir ./Dependencies/IGraphics/AGG
+      mv $AGENT_TEMPDIRECTORY/AGG/* ./Dependencies/IGraphics/AGG
+      rm $AGENT_TEMPDIRECTORY/*.zip
+    displayName: Move Secure File Dependencies
+    condition: and(or(variables.buildMac, variables.buildWin), eq(variables.buildDEPS, false))

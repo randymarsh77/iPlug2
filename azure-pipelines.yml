@@ -39,45 +39,13 @@ jobs:
     displayName: Download IGraphics Dependencies BUILT
     condition: eq(variables.buildDEPS, false)
 
-  - task: DownloadSecureFile@1
-    inputs:
-      secureFile: "VST2_SDK.zip"
-    displayName: Download VST2 SDK
-    condition: or(variables.buildMac, variables.buildWin)
-
-  - task: DownloadSecureFile@1
-    inputs:
-      secureFile: "AAX_SDK.zip"
-    displayName: Download AAX SDK
-    condition: or(variables.buildMac, variables.buildWin)
-
-  - task: DownloadSecureFile@1
-    inputs:
-      secureFile: "AGG.zip"
-    displayName: Download AGG
-    condition: or(variables.buildMac, variables.buildWin)
-
-  - task: ExtractFiles@1
-    inputs:
-      archiveFilePatterns: '$(Agent.TempDirectory)/*.zip'
-      destinationFolder: '$(Agent.TempDirectory)'
-      cleanDestinationFolder: false
-    condition: eq(variables.buildDEPS, false)
+  - template: Scripts/azure-get_secure_files.yml
 
   - bash: |
       mkdir ./Dependencies/Build
       mv $AGENT_TEMPDIRECTORY/IPLUG2_DEPS_MAC/* ./Dependencies/Build
       mv $AGENT_TEMPDIRECTORY/IPLUG2_DEPS_WIN/* ./Dependencies/Build
     displayName: Move IGraphics Dependencies BUILT
-    condition: and(or(variables.buildMac, variables.buildWin), eq(variables.buildDEPS, false))
-
-  - bash: |
-      mv $AGENT_TEMPDIRECTORY/AAX_SDK/* ./Dependencies/IPlug/AAX_SDK
-      mv $AGENT_TEMPDIRECTORY/VST2_SDK/* ./Dependencies/IPlug/VST2_SDK
-      mkdir ./Dependencies/IGraphics/AGG
-      mv $AGENT_TEMPDIRECTORY/AGG/* ./Dependencies/IGraphics/AGG
-      rm $AGENT_TEMPDIRECTORY/*.zip
-    displayName: Move Secure File Dependencies
     condition: and(or(variables.buildMac, variables.buildWin), eq(variables.buildDEPS, false))
 
   - bash: |
@@ -210,50 +178,7 @@ jobs:
       targetPath: 'Dependencies/Build/'
     displayName: Publish Windows Dependencies Artifacts
 
-- job: BUILD_WIN_AAX_LIBS
-  condition: and(eq(variables.buildDEPS, false), eq(variables.buildWin, true))
-  pool:
-    vmImage: 'vs2017-win2016'
-
-  steps:
-  - checkout: none
-
-  - task: DownloadSecureFile@1
-    inputs:
-      secureFile: "AAX_SDK.zip"
-    displayName: Download AAX SDK
-  
-  - task: ExtractFiles@1
-    inputs:
-      archiveFilePatterns: '$(Agent.TempDirectory)/*.zip'
-      destinationFolder: 'AAX_SDK'
-      cleanDestinationFolder: false
-
-  - bash: |
-      mkdir -p ./Dependencies/IPlug/AAX_SDK
-      mv AAX_SDK/* ./Dependencies/IPlug/
-
-  - task: VSBuild@1
-    inputs:
-      solution: 'Dependencies/IPlug/AAX_SDK/Libs/AAXLibrary/WinBuild/vs2017/AAXLibrary.sln'
-      vsVersion: '15.0'
-      platform: x64
-      configuration: Release
-    displayName: Compile AAX Library Visual Studio Solution x64
-
-  - task: VSBuild@1
-    inputs:
-      solution: 'Dependencies/IPlug/AAX_SDK/Libs/AAXLibrary/WinBuild/vs2017/AAXLibrary.sln'
-      vsVersion: '15.0'
-      platform: Win32
-      configuration: Release
-    displayName: Compile AAX Library Visual Studio Solution Win32
-
-  - task: PublishPipelineArtifact@0
-    inputs:
-      artifactName: 'DEPS_AAX_LIB_WIN'
-      targetPath: 'Dependencies/IPlug/AAX_SDK/Libs/'
-    displayName: Publish Windows AAX Libs
+- template: Scripts/azure-build_aax_libs.yml
 
 - job: BUILD_MAC_DEPS
   dependsOn: DOWNLOAD_DEPS
