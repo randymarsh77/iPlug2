@@ -1,13 +1,19 @@
 variables:
   build_deps: false # set true to build optional dependencies, e.g. (Cairo, FAUST etc), if false, pre-built versions are downloaded
-  build_web: true
-  build_mac: false
-  build_win: false
-  publish_downloads: false
-  publish_pages: false
-  publish_docs: false  
-  configuration: 'Release'
+  build_web: true # build web audio module versions of projects
+  build_mac: false # build mac binaries
+  build_win: false # build windows binaries
+  configuration: 'Release' # the configuration to build, e.g. 'Debug', 'Release', 'Tracer'
   target: 'All'
+
+  publish_downloads: false # publish project binaries to publish_site github releases
+  publish_pages: false # publish web audio modules to github publish_site
+  publish_docs: false # publish documentation to docs_site
+
+  publish_site: 'iPlug2/iPlug2.github.io'
+  docs_site: 'iPlug2/docs'
+  publish_email: olilarkin@googlemail.com
+  publish_user: olilarkin
 
 trigger:
 - azure-pipelines
