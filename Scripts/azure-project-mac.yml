@@ -69,11 +69,12 @@ steps:
   #   displayName: TEST PAYLOAD
 
   - bash: |
-      mkdir -p $AGENT_TEMPDIRECTORY/APP/${{parameters.name}}
-      mkdir -p $BUILD_ARTIFACTSTAGINGDIRECTORY/APP/${{parameters.name}}
-      mv ${{ parameters.path }}/${{parameters.name}}/build-mac/${{parameters.name}}.app* $AGENT_TEMPDIRECTORY/APP/${{parameters.name}}
-      cd $AGENT_TEMPDIRECTORY/APP/${{parameters.name}}
-      zip -r $BUILD_ARTIFACTSTAGINGDIRECTORY/APP/${{parameters.name}}/${{parameters.name}}.zip ${{parameters.name}}.*
+      ls -la mv ${{ parameters.path }}/${{parameters.name}}/build-mac/
+      # mkdir -p $AGENT_TEMPDIRECTORY/APP/${{parameters.name}}
+      # mkdir -p $BUILD_ARTIFACTSTAGINGDIRECTORY/APP/${{parameters.name}}
+      # mv ${{ parameters.path }}/${{parameters.name}}/build-mac/${{parameters.name}}.app* $AGENT_TEMPDIRECTORY/APP/${{parameters.name}}
+      # cd $AGENT_TEMPDIRECTORY/APP/${{parameters.name}}
+      # zip -r $BUILD_ARTIFACTSTAGINGDIRECTORY/APP/${{parameters.name}}/${{parameters.name}}.zip ${{parameters.name}}.*
       
       echo ${{parameters.justApp}}
       #if we are building a project with plug-ins
