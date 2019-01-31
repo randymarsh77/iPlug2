@@ -4,7 +4,7 @@ parameters:
   formatStr: ''
   artifactName: ''
   
- steps:   
+steps:   
 - bash: |
     outputDir=$BUILD_ARTIFACTSTAGINGDIRECTORY/${{parameters.formatStr}}/${{parameters.name}}
     mkdir -p $outputDir
