@@ -19,11 +19,12 @@ jobs:
 
   - task: ExtractFiles@1
     inputs:
-      archiveFilePatterns: '$(Agent.TempDirectory)/*.zip'
+      archiveFilePatterns: '$(Agent.TempDirectory)/IPLUG2_DEPS_*.zip'
       destinationFolder: '$(Agent.TempDirectory)'
       cleanDestinationFolder: false
     condition: eq(variables.build_deps, false)
 
+  # comment out this step if you don't have access to the secure files (VST2, AAX SDKs)
   - template: azure-get_secure_files.yml
 
   - bash: |
