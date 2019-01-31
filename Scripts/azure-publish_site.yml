@@ -1,6 +1,6 @@
 jobs:
 - job: PUBLISH_WEBSITE_DOWNLOADS
-  condition: eq(variables.publishDownloads, true)
+  condition: eq(variables.publish_downloads, true)
   dependsOn: 
     - BUILD_MAC_PROJECTS
     - BUILD_WIN_PROJECTS

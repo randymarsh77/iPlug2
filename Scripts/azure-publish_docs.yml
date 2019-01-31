@@ -1,6 +1,6 @@
 jobs:
 - job: PUBLISH_DOCUMENTATION
-  condition: eq(variables.publishDocs, true)
+  condition: eq(variables.publish_docs, true)
   
   pool:
     vmImage: 'ubuntu-16.04'

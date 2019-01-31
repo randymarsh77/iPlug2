@@ -1,7 +1,7 @@
 jobs:
 - job: BUILD_WIN_DEPS
-  dependsOn: DOWNLOAD_DEPS
-  condition: and(eq(variables.buildDEPS, true), eq(variables.buildWin, true))
+  dependsOn: DOWNLOAD_SRC_TREE
+  condition: and(eq(variables.build_deps, true), eq(variables.build_win, true))
 
   strategy:
     matrix:
@@ -40,7 +40,7 @@ jobs:
     displayName: Publish Windows $(buildPlatform) $(buildConfiguration) Dependencies Artifacts
 
 - job: PUBLISH_WIN_DEPS
-  condition: and(eq(variables.buildDEPS, true), eq(variables.buildWin, true))
+  condition: and(eq(variables.build_deps, true), eq(variables.build_win, true))
   dependsOn: BUILD_WIN_DEPS
   steps:
   - checkout: none
@@ -86,8 +86,8 @@ jobs:
 - template: azure-build_aax_libs.yml
 
 - job: BUILD_MAC_DEPS
-  dependsOn: DOWNLOAD_DEPS
-  condition: and(eq(variables.buildDEPS, true), eq(variables.buildMac, true))
+  dependsOn: DOWNLOAD_SRC_TREE
+  condition: and(eq(variables.build_deps, true), eq(variables.build_mac, true))
 
   pool:
     vmImage: 'macos-10.13'

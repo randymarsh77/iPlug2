@@ -1,18 +1,11 @@
 variables:
-  buildDEPS: false
-  downloadDEPS: true
-  buildWeb: true
-  buildMac: false
-  buildWin: false
-  publishDownloads: false
-  publishPages: false
-  publishDocs: false  
-  # buildNANOVG: true;
-  # buildLICE: false;
-  # buildCAIRO: false;
-  # buildAGG: false;
-  # buildCANVAS: false;
-  # buildInstallers: false #if true, the mac/win projects will build installers, rather than packaging individual binaries
+  build_deps: false # set true to build optional dependencies, e.g. (Cairo, FAUST etc), if false, pre-built versions are downloaded
+  build_web: true
+  build_mac: false
+  build_win: false
+  publish_downloads: false
+  publish_pages: false
+  publish_docs: false  
   configuration: 'Release'
   target: 'All'
 
@@ -23,12 +16,12 @@ jobs:
 # azure-get_deps.yml
 # Checks out the iPlug2 repository and installs various dependencies such as the VST3 and WAM SDKs.
 # Also installs various secure dependencies such as the VST2 and AAX SDKs. This will require editing if you have not set those secure files in Azure pipelines.
-# Optionally downloads pre-built dependencies depending on the buildDEPS variable
+# If build_deps == false, downloads optional pre-built dependencies depending on the  variable
 # Creating an artifact 'SRC' containing a populated iPlug 2 folder heirarchy
 - template: Scripts/azure-get_deps.yml
 
 # azure-build_deps.yml
-# If buildDEPS == true, use the scripts in iPlug2/Dependencies to build the optional dependencies (Cairo, FAUST etc)
+# If build_deps == true, use the scripts in iPlug2/Dependencies to build the optional dependencies
 # Creates two artifacts IPLUG2_DEPS_MAC and IPLUG2_DEPS_WIN which are published on the releases page of the iPlug2 github 
 # https://github.com/iPlug2/iPlug2/releases
 - template: Scripts/azure-build_deps.yml
@@ -39,11 +32,11 @@ jobs:
 - template: Scripts/azure-build_projects.yml
 
 # azure-publish_site.yml
-# if publishPages == true, publishes the WAMs hosted on https://iplug2.github.io/ 
-# if publishDownloads == true, publises the binaries for the examples hosted on the releases page of the iPlug2 website github
+# if publish_pages == true, publishes the WAMs hosted on https://iplug2.github.io/ 
+# if publish_downloads == true, publises the binaries for the examples hosted on the releases page of the iPlug2 website github
 # https://github.com/iPlug2/iPlug2.github.io/releases
 - template: Scripts/azure-publish_site.yml
 
 # azure-publish_docs.yml
-# if publishDocs == true, generates doxygen html from the iPlug2/Documentation/doxyfile and publishes it to https://iplug2.github.io/docs
+# if publish_docs == true, generates doxygen html from the iPlug2/Documentation/doxyfile and publishes it to https://iplug2.github.io/docs
 - template: Scripts/azure-publish_docs.yml

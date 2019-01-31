@@ -1,22 +1,18 @@
 jobs:
 - job: BUILD_MAC_PROJECTS
-  condition: and(eq(variables.buildDEPS, false), eq(variables.buildMac, true))
-  dependsOn: DOWNLOAD_DEPS
+  condition: and(eq(variables.build_deps, false), eq(variables.build_mac, true))
+  dependsOn: DOWNLOAD_SRC_TREE
 
   strategy:
     matrix:
       NANOVG:
         graphics: 'NANOVG'
-        # condition: eq(variables.buildNANOVG, true)
       # CAIRO:
       #   graphics: 'CAIRO'
-      #   condition: eq(variables.buildCAIRO, true)
       # LICE:
       #   graphics: 'LICE'
-      #   condition: eq(variables.buildLICE, true)
       # AGG:
       #   graphics: 'AGG'
-      #   condition: eq(variables.buildAGG, true)
 
   pool:
     vmImage: 'macos-10.13'
@@ -32,25 +28,21 @@ jobs:
       graphics: $(graphics)
 
 - job: BUILD_WIN_PROJECTS
-  condition: and(eq(variables.buildDEPS, false), eq(variables.buildWin, true))
+  condition: and(eq(variables.build_deps, false), eq(variables.build_win, true))
   dependsOn: 
-    - DOWNLOAD_DEPS
+    - DOWNLOAD_SRC_TREE
     - BUILD_WIN_AAX_LIBS
 
   strategy:
     matrix:
       NANOVG:
         graphics: 'NANOVG'
-        # condition: eq(variables.buildNANOVG, true)
       # CAIRO:
       #   graphics: 'CAIRO'
-      #   condition: eq(variables.buildCAIRO, true)
       # LICE:
       #   graphics: 'LICE'
-      #   condition: eq(variables.buildLICE, true)
       # AGG:
       #   graphics: 'AGG'
-      #   condition: eq(variables.buildAGG, true)
 
   pool:
     vmImage: 'vs2017-win2016'
@@ -71,17 +63,15 @@ jobs:
       graphics: $(graphics)
 
 - job: BUILD_WEB_PROJECTS
-  condition: and(eq(variables.buildDEPS, false), eq(variables.buildWeb, true))
-  dependsOn: DOWNLOAD_DEPS
+  condition: and(eq(variables.build_deps, false), eq(variables.build_web, true))
+  dependsOn: DOWNLOAD_SRC_TREE
 
   strategy:
     matrix:
       NANOVG:
         graphics: 'NANOVG'
-        # condition: eq(variables.buildNANOVG, true)
       CANVAS:
         graphics: 'CANVAS'
-        # condition: eq(variables.buildCANVAS, true)
 
   pool:
     vmImage: 'ubuntu-16.04'

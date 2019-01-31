@@ -4,26 +4,26 @@ steps:
     inputs:
       secureFile: "VST2_SDK.zip"
     displayName: Download VST2 SDK
-    condition: or(variables.buildMac, variables.buildWin)
+    condition: or(variables.build_mac, variables.build_win)
 
   - task: DownloadSecureFile@1
     inputs:
       secureFile: "AAX_SDK.zip"
     displayName: Download AAX SDK
-    condition: or(variables.buildMac, variables.buildWin)
+    condition: or(variables.build_mac, variables.build_win)
 
   - task: DownloadSecureFile@1
     inputs:
       secureFile: "AGG.zip"
     displayName: Download AGG
-    condition: or(variables.buildMac, variables.buildWin)
+    condition: or(variables.build_mac, variables.build_win)
 
   - task: ExtractFiles@1
     inputs:
       archiveFilePatterns: '$(Agent.TempDirectory)/*.zip'
       destinationFolder: '$(Agent.TempDirectory)'
       cleanDestinationFolder: false
-    condition: eq(variables.buildDEPS, false)
+    condition: eq(variables.build_deps, false)
 
   - bash: |
       mv $AGENT_TEMPDIRECTORY/AAX_SDK/* ./Dependencies/IPlug/AAX_SDK
@@ -32,4 +32,4 @@ steps:
       mv $AGENT_TEMPDIRECTORY/AGG/* ./Dependencies/IGraphics/AGG
       rm $AGENT_TEMPDIRECTORY/*.zip
     displayName: Move Secure File Dependencies
-    condition: and(or(variables.buildMac, variables.buildWin), eq(variables.buildDEPS, false))
+    condition: and(or(variables.build_mac, variables.build_win), eq(variables.build_deps, false))
