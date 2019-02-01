@@ -74,6 +74,7 @@ steps:
       path: '${{parameters.path}}'
       artifactName: '${{parameters.artifactName}}'
       formatStr: 'APP'
+      extStr: 'app'
 
   - ${{ if eq(parameters.justApp, false) }}:
     - template: azure-project-mac-artifact.yml

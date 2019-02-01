@@ -83,8 +83,6 @@ jobs:
       targetPath: 'Dependencies/Build/'
     displayName: Publish Windows Dependencies Artifacts
 
-- template: azure-build_aax_libs.yml
-
 - job: BUILD_MAC_DEPS
   dependsOn: GET_SRC_TREE
   condition: and(eq(variables.build_deps, true), eq(variables.build_mac, true))
@@ -126,3 +124,7 @@ jobs:
       artifactName: 'IPLUG2_DEPS_MAC'
       targetPath: 'Dependencies/Build/'
     displayName: Publish Mac Dependencies Artifacts
+
+
+- ${{ if eq(variables.build_aax, true) }}:
+  - template: azure-build_aax_libs.yml
