@@ -3,10 +3,10 @@ variables:
   build_web: false # build web audio module versions of projects
   build_mac: true # build mac binaries
   build_win: true # build windows binaries
-  build_vst2: false
+  build_vst2: true
   build_vst3: true
   build_auv2: true
-  build_aax: false
+  build_aax: true
 
   configuration: 'Release' # the configuration to build, e.g. 'Debug', 'Release', 'Tracer'
   target: 'All'

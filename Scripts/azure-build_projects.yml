@@ -31,7 +31,7 @@ jobs:
   condition: and(eq(variables.build_deps, false), eq(variables.build_win, true))
   dependsOn: 
     - GET_SRC_TREE
-    # - BUILD_WIN_AAX_LIBS
+    - BUILD_WIN_AAX_LIBS
 
   strategy:
     matrix:
@@ -56,6 +56,7 @@ jobs:
     inputs:
       artifactName: 'DEPS_AAX_LIB_WIN'
       targetPath: 'Dependencies/IPlug/AAX_SDK/Libs/'
+    condition: eq(variables.build_aax, true)
 
   - template: azure-projects.yml
     parameters:
