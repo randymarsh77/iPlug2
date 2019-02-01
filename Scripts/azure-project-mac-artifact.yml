@@ -3,14 +3,19 @@ parameters:
   path: ''
   formatStr: ''
   artifactName: ''
-  
-steps:   
+  extStr: ''
+
+steps:
+  - bash: |
+      rm -r $BUILD_ARTIFACTSTAGINGDIRECTORY/*
+    displayName: Clean temporary directory
+
 - bash: |
     outputDir=$BUILD_ARTIFACTSTAGINGDIRECTORY/${{parameters.formatStr}}/${{parameters.name}}
     mkdir -p $outputDir
     cd ${{parameters.path}}/${{parameters.name}}/build-mac/
-    zip -r ${{parameters.name}}.zip ${{parameters.name}}.*
-    mv ${{parameters.name}}.zip $outputDir
+    zip -r ${{parameters.name}}_${{parameters.formatStr}}.zip ${{parameters.name}}.{{parameters.extStr}}*
+    mv ${{parameters.name}}_${{parameters.formatStr}}.zip $outputDir
   displayName: Organize artifact
 
 - task: PublishPipelineArtifact@0

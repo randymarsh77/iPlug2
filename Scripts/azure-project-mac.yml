@@ -81,14 +81,16 @@ steps:
         name: '${{parameters.name}}'
         path: '${{parameters.path}}'
         artifactName: '${{parameters.artifactName}}'
-        formatStr: 'VST2'
+        formatStr: 'VST3'
+        extStr: 'vst3'
 
     - template: azure-project-mac-artifact.yml
       parameters:
         name: '${{parameters.name}}'
         path: '${{parameters.path}}'
         artifactName: '${{parameters.artifactName}}'
-        formatStr: 'VST3'
+        formatStr: 'VST2'
+        extStr: 'vst'
 
     - template: azure-project-mac-artifact.yml
       parameters:
@@ -96,6 +98,7 @@ steps:
         path: '${{parameters.path}}'
         artifactName: '${{parameters.artifactName}}'
         formatStr: 'AAX'
+        extStr: 'aaxplugin'
 
     - template: azure-project-mac-artifact.yml
       parameters:
@@ -103,3 +106,4 @@ steps:
         path: '${{parameters.path}}'
         artifactName: '${{parameters.artifactName}}'
         formatStr: 'AUv2'
+        extStr: 'component'
