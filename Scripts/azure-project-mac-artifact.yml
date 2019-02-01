@@ -7,7 +7,7 @@ parameters:
 
 steps:
   - bash: |
-      rm -r $BUILD_ARTIFACTSTAGINGDIRECTORY/*
+      rm -r $BUILD_ARTIFACTSTAGINGDIRECTORY
     displayName: Clean temporary directory
 
   - bash: |
