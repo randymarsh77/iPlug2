@@ -14,12 +14,12 @@ steps:
       outputDir=$BUILD_ARTIFACTSTAGINGDIRECTORY/${{parameters.formatStr}}/${{parameters.name}}
       mkdir -p $outputDir
       cd ${{parameters.path}}/${{parameters.name}}/build-mac/
-      zip -r ${{parameters.name}}_${{parameters.formatStr}}.zip ${{parameters.name}}.{{parameters.extStr}}*
+      zip -r ${{parameters.name}}_${{parameters.formatStr}}.zip ${{parameters.name}}.${{parameters.extStr}}*
       mv ${{parameters.name}}_${{parameters.formatStr}}.zip $outputDir
     displayName: Organize artifact
 
   - task: PublishPipelineArtifact@0
     inputs:
-      artifactName: 'MAC_${{parameters.formatStr}}_${{ parameters.artifactName }}'
+      artifactName: 'MAC_${{parameters.formatStr}}_${{parameters.artifactName}}'
       targetPath: '$(Build.ArtifactStagingDirectory)/${{parameters.formatStr}}/${{parameters.name}}'
     displayName: Publish ${{parameters.name}} ${{parameters.formatStr}}

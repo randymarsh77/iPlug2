@@ -34,7 +34,7 @@ steps:
     displayName: Ensure scripts are executable
 
   - bash: |
-      graphics=${{ parameters.graphics }}
+      graphics=${{parameters.graphics}}
       if [ $graphics = "LICE" ]
       then
         cd ./${{ parameters.path }}/${{parameters.name}}/config
@@ -51,20 +51,20 @@ steps:
         sed -i.bu 's/IGRAPHICS_NANOVG IGRAPHICS_METAL/IGRAPHICS_AGG/' ${{parameters.name}}-mac.xcconfig
         sed -i.bu 's/\/\/$(IGRAPHICS_LNK_FLAGS)/$(IGRAPHICS_LNK_FLAGS)/' ${{parameters.name}}-mac.xcconfig
       fi
-    displayName: Set graphics string to ${{ parameters.graphics }}
+    displayName: Set graphics string to ${{parameters.graphics}}
 
   - task: Xcode@5
     inputs:
       sdk: 'macosx10.13'
       xcWorkspacePath: '${{ parameters.path }}/${{parameters.name}}/projects/${{parameters.name}}-macOS.xcodeproj'
       args: '-target ${{ parameters.target }} -xcconfig ${{ parameters.path }}/${{parameters.name}}/config/${{parameters.name}}-mac.xcconfig'
-      configuration: '${{ parameters.configuration }}'
+      configuration: '${{parameters.configuration}}'
       xcodeVersion: '9'
     displayName: Build Xcode project
 
   # - bash: |
   #     mkdir -p ${{ parameters.path }}/${{parameters.name}}/build-mac/
-  #     echo "hello ${{ parameters.graphics }}" > ${{ parameters.path }}/${{parameters.name}}/build-mac/${{ parameters.graphics }}.txt
+  #     echo "hello ${{parameters.graphics}}" > ${{ parameters.path }}/${{parameters.name}}/build-mac/${{parameters.graphics}}.txt
 
   #   displayName: TEST PAYLOAD
 
