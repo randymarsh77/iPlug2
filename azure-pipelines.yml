@@ -1,7 +1,7 @@
 variables:
   build_deps: false # set true to build optional dependencies, e.g. (Cairo, FAUST etc), if false, pre-built versions are downloaded
   build_web: false # build web audio module versions of projects
-  build_mac: true # build mac binaries
+  build_mac: false # build mac binaries
   build_win: true # build windows binaries
   build_vst2: true
   build_vst3: true

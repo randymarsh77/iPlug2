@@ -5,14 +5,14 @@ parameters:
   target: 'All'
 
 steps:
-  # - template: ${{parameters.platform}}
-  #   parameters:
-  #     name: IPlugEffect
-  #     path: 'Examples'
-  #     graphics: ${{parameters.graphics}}
-  #     target: ${{parameters.target}}
-  #     artifactName: IPlugEffect_${{parameters.graphics}}
-  #     platformStr: ${{parameters.platformStr}}
+  - template: ${{parameters.platform}}
+    parameters:
+      name: IPlugEffect
+      path: 'Examples'
+      graphics: ${{parameters.graphics}}
+      target: ${{parameters.target}}
+      artifactName: IPlugEffect_${{parameters.graphics}}
+      platformStr: ${{parameters.platformStr}}
 
   # - template: ${{parameters.platform}}
   #   parameters:
@@ -51,12 +51,12 @@ steps:
   #     platformStr: ${{parameters.platformStr}}
   #     justApp: true
 
-  - template: ${{parameters.platform}}
-    parameters:
-      name: IGraphicsTest
-      path: 'Tests'
-      graphics: ${{parameters.graphics}}
-      target: ${{parameters.target}}
-      artifactName: IGraphicsTest_${{parameters.graphics}}
-      platformStr: ${{parameters.platformStr}}
-      justApp: true
+  # - template: ${{parameters.platform}}
+  #   parameters:
+  #     name: IGraphicsTest
+  #     path: 'Tests'
+  #     graphics: ${{parameters.graphics}}
+  #     target: ${{parameters.target}}
+  #     artifactName: IGraphicsTest_${{parameters.graphics}}
+  #     platformStr: ${{parameters.platformStr}}
+  #     justApp: true

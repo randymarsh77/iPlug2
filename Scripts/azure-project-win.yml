@@ -48,7 +48,7 @@ steps:
       solution: '${{parameters.path}}/${{parameters.name}}/${{parameters.name}}.sln'
       vsVersion: '15.0'
       platform: x64
-      msbuildArgs: /m
+      msbuildArgs: /m /t:${{parameters.name}}-vst2
       configuration: '${{parameters.configuration}}'
     displayName: Compile ${{parameters.name}} Visual Studio Solution x64
 
