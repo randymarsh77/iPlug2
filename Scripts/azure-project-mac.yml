@@ -13,21 +13,21 @@ steps:
       echo srcRepo parameter = ${{ parameters.srcRepo }}
       if [ ${{ parameters.srcRepo }} != none ]
       then
-        if [ ! -d ./${{ parameters.path }} ]
+        if [ ! -d ./${{parameters.path}} ]
         then
-          mkdir -p ./${{ parameters.path }}
+          mkdir -p ./${{parameters.path}}
         fi
-        cd ./${{ parameters.path }}
+        cd ./${{parameters.path}}
         git clone --recursive -b ${{ parameters.srcBranch }} ${{ parameters.srcRepo }} ${{parameters.name}}
       else
-        echo no remote repo argument supplied, building local project ${{ parameters.path }}/${{parameters.name}} ... 
+        echo no remote repo argument supplied, building local project ${{parameters.path}}/${{parameters.name}} ... 
       fi
     env:
       GITHUB_PAT: $(GITHUB_PAT)
     displayName: (Optionally) clone ${{parameters.name}} repo
 
   - bash: |
-      cd ./${{ parameters.path }}/${{parameters.name}}/scripts
+      cd ./${{parameters.path}}/${{parameters.name}}/scripts
       chmod +x *.sh # in-case executable bit was lost (e.g. project duplicated on windows)
       chmod +x *.command
       chmod +x *.py
@@ -37,17 +37,17 @@ steps:
       graphics=${{parameters.graphics}}
       if [ $graphics = "LICE" ]
       then
-        cd ./${{ parameters.path }}/${{parameters.name}}/config
+        cd ./${{parameters.path}}/${{parameters.name}}/config
         sed -i.bu 's/IGRAPHICS_NANOVG IGRAPHICS_METAL/IGRAPHICS_LICE/' ${{parameters.name}}-mac.xcconfig
         sed -i.bu 's/\/\/$(IGRAPHICS_LNK_FLAGS)/$(IGRAPHICS_LNK_FLAGS)/' ${{parameters.name}}-mac.xcconfig
       elif [ $graphics = "CAIRO" ]
       then
-        cd ./${{ parameters.path }}/${{parameters.name}}/config
+        cd ./${{parameters.path}}/${{parameters.name}}/config
         sed -i.bu 's/IGRAPHICS_NANOVG IGRAPHICS_METAL/IGRAPHICS_CAIRO/' ${{parameters.name}}-mac.xcconfig
         sed -i.bu 's/\/\/$(IGRAPHICS_LNK_FLAGS)/$(IGRAPHICS_LNK_FLAGS)/' ${{parameters.name}}-mac.xcconfig
       elif [ $graphics = "AGG" ]
       then
-        cd ./${{ parameters.path }}/${{parameters.name}}/config
+        cd ./${{parameters.path}}/${{parameters.name}}/config
         sed -i.bu 's/IGRAPHICS_NANOVG IGRAPHICS_METAL/IGRAPHICS_AGG/' ${{parameters.name}}-mac.xcconfig
         sed -i.bu 's/\/\/$(IGRAPHICS_LNK_FLAGS)/$(IGRAPHICS_LNK_FLAGS)/' ${{parameters.name}}-mac.xcconfig
       fi
@@ -56,17 +56,11 @@ steps:
   - task: Xcode@5
     inputs:
       sdk: 'macosx10.13'
-      xcWorkspacePath: '${{ parameters.path }}/${{parameters.name}}/projects/${{parameters.name}}-macOS.xcodeproj'
-      args: '-target ${{ parameters.target }} -xcconfig ${{ parameters.path }}/${{parameters.name}}/config/${{parameters.name}}-mac.xcconfig'
+      xcWorkspacePath: '${{parameters.path}}/${{parameters.name}}/projects/${{parameters.name}}-macOS.xcodeproj'
+      args: '-target ${{ parameters.target }} -xcconfig ${{parameters.path}}/${{parameters.name}}/config/${{parameters.name}}-mac.xcconfig'
       configuration: '${{parameters.configuration}}'
       xcodeVersion: '9'
     displayName: Build Xcode project
-
-  # - bash: |
-  #     mkdir -p ${{ parameters.path }}/${{parameters.name}}/build-mac/
-  #     echo "hello ${{parameters.graphics}}" > ${{ parameters.path }}/${{parameters.name}}/build-mac/${{parameters.graphics}}.txt
-
-  #   displayName: TEST PAYLOAD
 
   - template: azure-project-mac-artifact.yml
     parameters:
